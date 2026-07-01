@@ -1,0 +1,335 @@
+/* ===========================
+   Nàng Quýt Cosmetics Header
+=========================== */
+
+:root {
+    --primary: #FFB26B;
+    --primary-dark: #F7933A;
+    --primary-light: #FFF3E7;
+    --background: #FFFDFB;
+    --text: #444;
+    --gray: #777;
+    --border: #F5E5D6;
+    --shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* Header */
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 74px;
+    background: rgba(255,255,255,.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    z-index: 999;
+    transition: .35s;
+}
+
+    .header.scrolled {
+        box-shadow: var(--shadow);
+    }
+
+.header-inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+/* Logo */
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary-dark);
+}
+
+    .header-logo span {
+        color: #555;
+    }
+
+.header-logo-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg,#FFD7AA,var(--primary));
+    color: #fff;
+    font-size: 24px;
+    box-shadow: 0 6px 18px rgba(247,147,58,.25);
+}
+
+/* Menu */
+
+.header-nav {
+    display: flex;
+    gap: 8px;
+}
+
+    .header-nav a {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 600;
+        padding: 10px 18px;
+        border-radius: 30px;
+        transition: .3s;
+    }
+
+        .header-nav a:hover,
+        .header-nav .active {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+        }
+
+/* Search */
+
+.header-search {
+    flex: 1;
+    max-width: 430px;
+    display: flex;
+    align-items: center;
+    background: #FFF9F4;
+    border: 1px solid #FFE5C8;
+    border-radius: 50px;
+    padding: 0 18px;
+    height: 46px;
+    transition: .3s;
+}
+
+    .header-search:hover,
+    .header-search:focus-within {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(255,178,107,.15);
+    }
+
+    .header-search input {
+        flex: 1;
+        border: none;
+        background: none;
+        outline: none;
+        margin-left: 10px;
+        font-size: 15px;
+    }
+
+.header-search-icon {
+    color: var(--primary-dark);
+    font-size: 18px;
+}
+
+/* Right */
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Cart */
+
+.header-cart-btn {
+    position: relative;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: #FFF6ED;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: var(--primary-dark);
+    transition: .3s;
+}
+
+    .header-cart-btn svg {
+        font-size: 22px;
+    }
+
+    .header-cart-btn:hover {
+        background: var(--primary);
+        color: #fff;
+        transform: translateY(-2px);
+    }
+
+/* Badge */
+
+.header-cart-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    border-radius: 20px;
+    background: #ff3b30;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #fff;
+    animation: pop .25s ease;
+}
+
+@keyframes pop {
+
+    0% {
+        transform: scale(.5);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* User */
+
+.header-user-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    background: #FFF6ED;
+    padding: 10px 15px;
+    border-radius: 30px;
+    cursor: pointer;
+    color: var(--text);
+    transition: .3s;
+}
+
+    .header-user-btn:hover {
+        background: var(--primary);
+        color: #fff;
+    }
+
+/* Dropdown */
+
+.user-dropdown {
+    position: absolute;
+    right: 0;
+    top: 60px;
+    width: 250px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(15px);
+    transition: .3s;
+}
+
+    .user-dropdown.open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+.user-dropdown-header {
+    padding: 18px;
+    background: linear-gradient(135deg,#FFF5E9,#FFE8CF);
+}
+
+    .user-dropdown-header p:first-child {
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .user-dropdown-header p:last-child {
+        font-size: 13px;
+        color: #777;
+    }
+
+.user-dropdown a,
+.user-dropdown button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    border: none;
+    background: none;
+    color: #555;
+    text-decoration: none;
+    cursor: pointer;
+    transition: .25s;
+}
+
+    .user-dropdown a:hover,
+    .user-dropdown button:hover {
+        background: #FFF8F2;
+        color: var(--primary-dark);
+    }
+
+/* Mobile */
+
+.mobile-nav {
+    display: none;
+}
+
+@media(max-width:768px) {
+
+    .header-nav,
+    .header-search {
+        display: none;
+    }
+
+    .mobile-nav {
+        display: block;
+        position: fixed;
+        top: 74px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #fff;
+        padding: 24px;
+        transform: translateX(-100%);
+        transition: .3s;
+    }
+
+        .mobile-nav.open {
+            transform: translateX(0);
+        }
+
+    .mobile-search {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid #FFE5C8;
+        border-radius: 40px;
+        padding: 12px 16px;
+        margin-bottom: 20px;
+        background: #FFF9F4;
+    }
+
+        .mobile-search input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: none;
+        }
+
+    .mobile-nav a {
+        display: block;
+        padding: 16px 0;
+        color: #555;
+        text-decoration: none;
+        border-bottom: 1px solid #F4E5D6;
+        font-weight: 600;
+    }
+}

@@ -1,0 +1,51 @@
+﻿/*
+ * Ho va ten: Nguyen Thi Man Duy
+ * Mssv: 2123110470
+ * Version 2
+ * Ngay thuc hien: 4/6/2026
+ */
+using CMS.Data;
+using Microsoft.AspNetCore.Mvc;
+
+namespace CMS.Backend.Controllers.Api
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CategoriesProductsController : ControllerBase
+    {
+        private readonly ApplicationDbContext _context;
+
+        public CategoriesProductsController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var categories = _context.CategoriesProduct
+                .OrderByDescending(x => x.Id)
+                .Select(x => new
+                {
+                    x.Id,
+                    x.Name,
+                    x.Description
+                })
+                .ToList();
+
+            return Ok(categories);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetDetail(int id)
+        {
+            var category = _context.CategoriesProduct
+                .FirstOrDefault(x => x.Id == id);
+
+            if (category == null)
+                return NotFound(new { message = "Không tìm thấy danh mục" });
+
+            return Ok(category);
+        }
+    }
+}

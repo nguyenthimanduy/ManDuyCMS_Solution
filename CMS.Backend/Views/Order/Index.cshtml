@@ -1,0 +1,228 @@
+@model IEnumerable<CMS.Data.Entities.Order>
+
+@{
+    ViewData["Title"] = "Quản lý đơn hàng";
+}
+
+<style>
+    /* ===== Trạng thái ===== */
+
+    .badge-status {
+        display: inline-block;
+        min-width: 120px;
+        padding: 7px 14px;
+        border-radius: 30px;
+        font-size: 13px;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .badge-pending {
+        background: #FFF3CD;
+        color: #B45309;
+        border: 1px solid #FACC15;
+    }
+
+    .badge-delivering {
+        background: #DBEAFE;
+        color: #1D4ED8;
+        border: 1px solid #60A5FA;
+    }
+
+    .badge-complete {
+        background: #DCFCE7;
+        color: #15803D;
+        border: 1px solid #4ADE80;
+    }
+
+    .badge-cancel {
+        background: #FEE2E2;
+        color: #DC2626;
+        border: 1px solid #F87171;
+    }
+
+    .badge-paid {
+        background: #F3E8FF;
+        color: #7C3AED;
+        border: 1px solid #C084FC;
+    }
+
+    .badge-other {
+        background: #E5E7EB;
+        color: #374151;
+        border: 1px solid #D1D5DB;
+    }
+
+    /* ===== Ghi chú ===== */
+
+    .note-text {
+        color: #374151;
+        font-weight: 500;
+    }
+</style>
+
+<div class="animate-fade-in">
+
+    <div class="page-header">
+        <div>
+            <h2>Đơn hàng</h2>
+            <div class="subtitle">
+                Quản lý đơn hàng & giao dịch
+            </div>
+        </div>
+
+        <a asp-action="Create"
+           class="btn-cyber btn-cyber-success">
+            <i class="fa-solid fa-plus"></i>
+            Tạo đơn hàng
+        </a>
+
+    </div>
+
+    <div class="cyber-table-wrapper">
+
+        <table class="cyber-table cyber-table-sm">
+
+            <thead>
+
+                <tr>
+
+                    <th class="text-center">ID</th>
+
+                    <th>Khách hàng</th>
+
+                    <th class="text-center">Ngày đặt</th>
+
+                    <th class="text-center">Trạng thái</th>
+
+                    <th>Ghi chú</th>
+
+                    <th class="text-end">Tổng tiền</th>
+
+                    <th class="text-center">Thao tác</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="7" class="text-center">
+                            Không có đơn hàng nào.
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td class="text-center">
+                                @item.Id
+                            </td>
+
+                            <td>
+                                <strong>@item.Customer?.FullName</strong>
+                            </td>
+
+                            <td class="text-center">
+                                @item.OrderDate.ToString("dd/MM/yyyy HH:mm")
+                            </td>
+
+                            <td class="text-center">
+
+                                @switch (item.Status)
+                                {
+                                    case 0:
+                                        <span class="badge-status badge-pending">
+                                            ⏳ Chờ duyệt
+                                        </span>
+                                        break;
+
+                                    case 1:
+                                        <span class="badge-status badge-delivering">
+                                            🚚 Đang giao
+                                        </span>
+                                        break;
+
+                                    case 2:
+                                        <span class="badge-status badge-complete">
+                                            ✅ Hoàn thành
+                                        </span>
+                                        break;
+
+                                    case 3:
+                                        <span class="badge-status badge-cancel">
+                                            ❌ Đã hủy
+                                        </span>
+                                        break;
+
+                                    case 4:
+                                        <span class="badge-status badge-paid">
+                                            💳 Đã thanh toán
+                                        </span>
+                                        break;
+
+                                    default:
+                                        <span class="badge-status badge-other">
+                                            ❓ Không xác định
+                                        </span>
+                                        break;
+                                }
+
+                    </td>
+
+                    <td>
+                        <span class="note-text">
+                            @(string.IsNullOrWhiteSpace(item.Notes)
+                                                        ? "Không có ghi chú"
+                                                        : item.Notes)
+                        </span>
+                    </td>
+
+                            <td class="text-end text-neon-yellow">
+                        @{
+                                    var total = item.OrderDetails?.Sum(x => x.Quantity * x.UnitPrice) ?? 0;
+                                }
+
+                                @total.ToString("N0") VNĐ
+                            </td>
+
+                            <td class="text-center">
+
+                                <a asp-action="Details"
+                                   asp-route-id="@item.Id"
+                                   class="btn-cyber btn-cyber-info btn-cyber-sm">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+
+                                <a asp-action="Edit"
+                                   asp-route-id="@item.Id"
+                                   class="btn-cyber btn-cyber-primary btn-cyber-sm">
+                                    <i class="fa-solid fa-pen"></i>
+                                </a>
+
+                                <a asp-action="Delete"
+                                   asp-route-id="@item.Id"
+                                   onclick="return confirm('Bạn có chắc muốn xóa đơn hàng này?')"
+                                   class="btn-cyber btn-cyber-danger btn-cyber-sm">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

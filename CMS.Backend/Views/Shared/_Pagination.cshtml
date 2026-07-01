@@ -1,0 +1,128 @@
+@{
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+    string action = ViewContext.RouteData.Values["action"]?.ToString();
+}
+
+<style>
+    /* ================= Pagination ================= */
+
+    .custom-pagination-wrapper {
+        display: flex;
+        justify-content: center;
+        margin: 35px 0;
+    }
+
+    .custom-pagination {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0;
+        margin: 0;
+    }
+
+        .custom-pagination .page-item {
+            list-style: none;
+        }
+
+        .custom-pagination .page-link {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            background: #fff;
+            color: #495057;
+            font-weight: 600;
+            transition: all .25s ease;
+        }
+
+            .custom-pagination .page-link:hover {
+                background: #0d6efd;
+                color: #fff;
+                border-color: #0d6efd;
+                transform: translateY(-2px);
+            }
+
+        .custom-pagination .page-item.active .page-link {
+            background: #0d6efd;
+            color: #fff;
+            border-color: #0d6efd;
+            box-shadow: 0 5px 15px rgba(13,110,253,.25);
+        }
+
+        .custom-pagination .page-item.disabled .page-link {
+            background: #f8f9fa;
+            color: #bdbdbd;
+            border-color: #dee2e6;
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+
+        .custom-pagination .page-link i {
+            font-size: 14px;
+        }
+</style>
+
+@if (totalPages > 1)
+{
+    <div class="custom-pagination-wrapper">
+        <ul class="pagination custom-pagination">
+
+            <!-- Previous -->
+            <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                @if (currentPage > 1)
+                {
+                    <a class="page-link"
+                       asp-action="@action"
+                       asp-route-page="@(currentPage - 1)"
+                       asp-route-categoryId="@ViewBag.CategoryId">
+                        <i class="fa-solid fa-angle-left"></i>
+                    </a>
+                }
+                else
+                {
+                    <span class="page-link">
+                        <i class="fa-solid fa-angle-left"></i>
+                    </span>
+                }
+            </li>
+
+            <!-- Page Number -->
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a class="page-link"
+                       asp-action="@action"
+                       asp-route-page="@i"
+                       asp-route-categoryId="@ViewBag.CategoryId">
+                        @i
+                    </a>
+                </li>
+            }
+
+            <!-- Next -->
+            <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                @if (currentPage < totalPages)
+                {
+                    <a class="page-link"
+                       asp-action="@action"
+                       asp-route-page="@(currentPage + 1)"
+                       asp-route-categoryId="@ViewBag.CategoryId">
+                        <i class="fa-solid fa-angle-right"></i>
+                    </a>
+                }
+                else
+                {
+                    <span class="page-link">
+                        <i class="fa-solid fa-angle-right"></i>
+                    </span>
+                }
+            </li>
+
+        </ul>
+    </div>
+}

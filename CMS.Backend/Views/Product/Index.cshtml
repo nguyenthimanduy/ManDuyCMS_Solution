@@ -1,0 +1,338 @@
+@model IEnumerable<CMS.Data.Entities.Product>
+
+@{
+    ViewData["Title"] = "Quản lý sản phẩm";
+}
+
+
+<div class="animate-fade-in">
+
+
+    <div class="page-header">
+
+        <div>
+
+            <h2>Sản phẩm</h2>
+
+            <div class="subtitle">
+                Quản lý danh sách sản phẩm trong hệ thống
+            </div>
+
+        </div>
+
+
+        <a asp-action="Create"
+           class="btn-cyber btn-cyber-success">
+
+            <i class="fa-solid fa-plus"></i>
+
+            Thêm sản phẩm
+
+        </a>
+
+    </div>
+
+
+
+
+
+    <!-- FILTER -->
+
+    <div class="cyber-filter">
+
+
+        <form asp-action="Index"
+              method="get">
+
+
+            <div class="filter-group">
+
+
+                <label>
+                    Lọc theo danh mục
+                </label>
+
+
+                <select name="categoryId"
+                        asp-items="ViewBag.Categories"
+                        class="cyber-input"
+                        onchange="this.form.submit()">
+
+
+
+                    <option value="">
+                        -- Tất cả danh mục --
+                    </option>
+
+
+                </select>
+
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+
+
+
+
+
+    <!-- TABLE -->
+
+    <div class="cyber-table-wrapper">
+
+
+        <table class="cyber-table">
+
+
+            <thead>
+
+
+                <tr>
+
+
+                    <th>ID</th>
+
+                    <th>Ảnh</th>
+
+                    <th>Tên sản phẩm</th>
+
+                    <th>Mô tả</th>
+
+                    <th>Giá</th>
+
+                    <th>Tồn kho</th>
+
+                    <th>Danh mục</th>
+
+                    <th>Thao tác</th>
+
+
+                </tr>
+
+
+            </thead>
+
+
+
+
+            <tbody>
+
+
+                @if (Model != null && Model.Any())
+                {
+
+
+                    foreach (var item in Model)
+                    {
+
+
+                        <tr>
+
+
+                            <td>
+                                @item.Id
+                            </td>
+
+
+
+                            <td>
+
+
+                                @if (!string.IsNullOrEmpty(item.ImageUrl))
+                                {
+
+                                    <img src="@item.ImageUrl"
+                                         style="width:80px;height:80px;object-fit:cover;border-radius:8px;" />
+
+                                }
+                                else
+                                {
+
+                                    <i class="fa-regular fa-image fa-2x"></i>
+
+                                }
+
+
+                            </td>
+
+
+
+                            <td>
+
+                                <b>
+                                    @item.Name
+                                </b>
+
+                            </td>
+
+
+
+
+                            <td style="max-width:300px">
+
+
+                                @if (!string.IsNullOrEmpty(item.Description))
+                                {
+
+
+                                    @(item.Description.Length > 100
+                                                            ? item.Description.Substring(0, 100) + "..."
+                                                            : item.Description)
+
+
+                                                }
+                                else
+                                {
+
+                                    <span>
+                                        Không có mô tả
+                                    </span>
+
+                                }
+
+
+                            </td>
+
+
+
+
+                            <td>
+
+                                @item.Price.ToString("N0") VNĐ
+
+                            </td>
+
+
+
+
+                            <td>
+
+
+                                @if (item.StockQuantity > 0)
+                                {
+
+                                    <span class="badge bg-success">
+                                        @item.StockQuantity
+                                    </span>
+
+                                }
+                                else
+                                {
+
+                                    <span class="badge bg-danger">
+                                        Hết hàng
+                                    </span>
+
+                                }
+
+
+                            </td>
+
+
+
+
+                            <td>
+
+
+                                @if (item.Category != null)
+                                {
+
+                                    <span class="badge bg-info text-dark">
+
+                                        @item.Category.Name
+
+                                    </span>
+
+                                }
+                                else
+                                {
+
+                                    <span class="badge bg-secondary">
+
+                                        Chưa có danh mục
+
+                                    </span>
+
+                                }
+
+
+                            </td>
+
+
+
+
+
+                            <td>
+
+
+                                <a asp-action="Edit"
+                                   asp-route-id="@item.Id"
+                                   class="btn-cyber btn-cyber-primary btn-cyber-sm"
+                                   title="Sửa">
+
+
+                                    <i class="fa-solid fa-pen"></i>
+
+
+                                </a>
+
+
+
+                                <a asp-action="Delete"
+                                   asp-route-id="@item.Id"
+                                   class="btn-cyber btn-cyber-danger btn-cyber-sm"
+                                   title="Xóa"
+                                   onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?')">
+
+
+                                    <i class="fa-solid fa-trash"></i>
+
+
+                                </a>
+
+
+                            </td>
+
+
+                        </tr>
+
+
+                    }
+
+
+                }
+                else
+                {
+
+
+                    <tr>
+
+                        <td colspan="8"
+                            class="text-center">
+
+                            Không có sản phẩm
+
+                        </td>
+
+                    </tr>
+
+
+                }
+
+
+
+            </tbody>
+
+
+        </table>
+
+        @await Html.PartialAsync("_Pagination")
+
+
+    </div>

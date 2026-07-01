@@ -1,0 +1,211 @@
+@model IEnumerable<CMS.Data.Entities.User>
+
+@{
+    ViewData["Title"] = "Quản lý thành viên";
+}
+
+<div class="animate-fade-in">
+
+    <div class="page-header">
+        <div>
+            <h2>Thành viên</h2>
+            <div class="subtitle">
+                Quản lý tài khoản và phân quyền hệ thống
+            </div>
+        </div>
+
+        <a asp-action="Create" class="btn-cyber btn-cyber-success">
+            <i class="fa-solid fa-plus"></i>
+            Thêm thành viên
+        </a>
+    </div>
+
+    <div class="cyber-table-wrapper">
+
+        <table class="cyber-table">
+
+            <thead>
+                <tr>
+                    <th class="text-center">ID</th>
+                    <th>Tên đăng nhập</th>
+                    <th>Họ và tên</th>
+                    <th class="text-center">Vai trò</th>
+                    <th class="text-center">Hành động</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @if (!Model.Any())
+                {
+                    <tr class="empty-row">
+                        <td colspan="5" class="text-center">
+                            Chưa có thành viên nào trong hệ thống.
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td class="text-center">
+                                @item.Id
+                            </td>
+
+                            <td>
+                                <b>@item.Username</b>
+                            </td>
+
+                            <td>
+                                @item.FullName
+                            </td>
+
+                            <td class="text-center">
+
+                                @switch (item.Role)
+                                {
+                                    case "Admin":
+
+                                        <span class="role-badge role-admin">
+                                            <i class="fa-solid fa-shield-halved"></i>
+                                            Quản trị viên
+                                        </span>
+
+                                        break;
+
+                                    case "Manager":
+
+                                        <span class="role-badge role-manager">
+                                            <i class="fa-solid fa-user-tie"></i>
+                                            Quản lý
+                                        </span>
+
+                                        break;
+
+                                    case "Staff":
+
+                                        <span class="role-badge role-staff">
+                                            <i class="fa-solid fa-user"></i>
+                                            Nhân viên
+                                        </span>
+
+                                        break;
+
+                                    case "Editor":
+
+                                        <span class="role-badge role-editor">
+                                            <i class="fa-solid fa-pen"></i>
+                                            Biên tập viên
+                                        </span>
+
+                                        break;
+
+                                    default:
+
+                                        <span class="role-badge role-default">
+                                            <i class="fa-solid fa-circle-question"></i>
+                                            @item.Role
+                                        </span>
+
+                                        break;
+                                }
+
+                            </td>
+
+                            <td class="text-center">
+
+                                <a asp-action="Edit"
+                                   asp-route-id="@item.Id"
+                                   class="btn-cyber btn-cyber-primary btn-cyber-sm">
+
+                                    <i class="fa-solid fa-pen"></i>
+                                    Sửa
+
+                                </a>
+
+                                <a asp-action="Delete"
+                                   asp-route-id="@item.Id"
+                                   onclick="return confirm('Bạn có chắc muốn xóa thành viên này?')"
+                                   class="btn-cyber btn-cyber-danger btn-cyber-sm">
+
+                                    <i class="fa-solid fa-trash"></i>
+                                    Xóa
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<style>
+
+    /*=========================
+          ROLE BADGE
+    ==========================*/
+
+    .role-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-width: 150px;
+        padding: 8px 18px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 700;
+        color: #fff;
+        box-shadow: 0 8px 18px rgba(0,0,0,.12);
+        transition: .3s;
+    }
+
+        .role-badge i {
+            font-size: 14px;
+        }
+
+        .role-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(0,0,0,.18);
+        }
+
+    /* Admin */
+
+    .role-admin {
+        background: linear-gradient(135deg,#ef4444,#b91c1c);
+    }
+
+    /* Manager */
+
+    .role-manager {
+        background: linear-gradient(135deg,#f59e0b,#ea580c);
+    }
+
+    /* Staff */
+
+    .role-staff {
+        background: linear-gradient(135deg,#22c55e,#15803d);
+    }
+
+    /* Editor */
+
+    .role-editor {
+        background: linear-gradient(135deg,#3b82f6,#2563eb);
+    }
+
+    /* Default */
+
+    .role-default {
+        background: linear-gradient(135deg,#6b7280,#4b5563);
+    }
+</style>

@@ -1,0 +1,487 @@
+@model CMS.Data.Entities.Post
+
+@{
+    ViewData["Title"] = "Chi tiết bài viết";
+}
+
+
+<div class="animate-fade-in">
+
+
+    <div class="page-header">
+
+
+        <div>
+
+            <h2>
+                Chi tiết bài viết
+            </h2>
+
+
+            <div class="subtitle">
+
+                Xem đầy đủ thông tin bài viết
+
+            </div>
+
+
+        </div>
+
+
+
+
+        <div style="display:flex;gap:10px;">
+
+
+            <a asp-action="Edit"
+               asp-route-id="@Model.Id"
+               class="btn-cyber btn-cyber-primary">
+
+
+                <i class="fa-solid fa-pen"></i>
+
+                Sửa bài viết
+
+
+            </a>
+
+
+
+            <a asp-action="Index"
+               class="btn-cyber btn-cyber-secondary">
+
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Quay lại
+
+
+            </a>
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+    <div class="row justify-content-center">
+
+
+        <div class="col-lg-9 col-md-11">
+
+
+
+
+
+            <!-- IMAGE -->
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+
+                <div class="detail-hero-image">
+
+
+                    <img src="@Model.ImageUrl"
+                         alt="@Model.Title"
+                         class="detail-post-image" />
+
+
+                </div>
+
+
+            }
+
+
+
+
+
+
+
+
+            <!-- INFO CARD -->
+
+
+            <div class="cyber-card mb-4">
+
+
+                <div class="card-header-cyber">
+
+
+                    <i class="fa-solid fa-circle-info"></i>
+
+                    Thông tin bài viết
+
+
+                </div>
+
+
+
+
+
+                <dl class="cyber-dl">
+
+
+                    <dt>
+                        ID
+                    </dt>
+
+
+                    <dd>
+
+                        <span class="badge-cyber badge-cyber-info">
+
+                            #@Model.Id
+
+                        </span>
+
+                    </dd>
+
+
+
+
+
+
+                    <dt>
+                        Tiêu đề
+                    </dt>
+
+
+                    <dd>
+
+                        <b>
+                            @Model.Title
+                        </b>
+
+                    </dd>
+
+
+
+
+
+
+                    <dt>
+                        Chuyên mục
+                    </dt>
+
+
+                    <dd>
+
+
+                        <span class="badge-cyber badge-cyber-purple">
+
+                            @(Model.Category?.Name ?? "Chưa có danh mục")
+
+                        </span>
+
+
+                    </dd>
+
+
+
+
+
+
+
+
+                    <dt>
+                        Ngày đăng
+                    </dt>
+
+
+                    <dd>
+
+
+                        <i class="fa-regular fa-calendar"></i>
+
+
+                        @Model.CreatedDate.ToString("dd/MM/yyyy")
+
+
+                    </dd>
+
+
+
+
+
+
+
+
+                    <dt>
+                        Ảnh
+                    </dt>
+
+
+                    <dd>
+
+
+                        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                        {
+
+                            <span class="badge-cyber badge-cyber-success">
+
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Có ảnh
+
+
+                            </span>
+
+
+                        }
+                        else
+                        {
+
+                            <span class="badge-cyber badge-cyber-secondary">
+
+                                Không có ảnh
+
+                            </span>
+
+                        }
+
+
+
+                    </dd>
+
+
+
+
+                </dl>
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+            <!-- CONTENT -->
+
+
+            <div class="cyber-card">
+
+
+
+                <div class="card-header-cyber">
+
+
+                    <i class="fa-solid fa-file-lines"></i>
+
+                    Nội dung bài viết
+
+
+                </div>
+
+
+
+
+
+                <div class="detail-content">
+
+
+                    @Html.Raw(
+                    Model.Content?
+                    .Replace("\n", "<br />")
+                    ??
+                    "<em>Chưa có nội dung</em>"
+                                        )
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <!-- BUTTON -->
+
+
+            <div class="cyber-form-actions mt-4">
+
+
+                <a asp-action="Edit"
+                   asp-route-id="@Model.Id"
+                   class="btn-cyber btn-cyber-primary">
+
+
+                    <i class="fa-solid fa-pen"></i>
+
+                    Sửa
+
+
+                </a>
+
+
+
+
+
+                <a asp-action="Delete"
+                   asp-route-id="@Model.Id"
+                   class="btn-cyber btn-cyber-danger">
+
+
+                    <i class="fa-solid fa-trash"></i>
+
+                    Xóa
+
+
+                </a>
+
+
+
+
+
+                <a asp-action="Index"
+                   class="btn-cyber btn-cyber-secondary">
+
+
+                    <i class="fa-solid fa-arrow-left"></i>
+
+                    Danh sách
+
+
+                </a>
+
+
+
+            </div>
+
+
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+<style>
+
+
+    /* ================= IMAGE ================= */
+
+
+    .detail-hero-image {
+        background: white;
+        padding: 20px;
+        border-radius: 20px;
+        margin-bottom: 25px;
+        text-align: center;
+        box-shadow: 0 10px 25px rgba(0,0,0,.08);
+    }
+
+
+
+    .detail-post-image {
+        width: 100%;
+        max-width: 650px;
+        height: 350px;
+        object-fit: cover;
+        border-radius: 18px;
+    }
+
+
+
+
+
+
+    /* ================= CARD ================= */
+
+
+    .cyber-card {
+        background: white;
+        padding: 25px;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,.06);
+    }
+
+
+
+
+    .card-header-cyber {
+        font-size: 18px;
+        font-weight: 700;
+        color: #f28c28;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #eee;
+    }
+
+
+
+
+
+
+    /* ================= CONTENT ================= */
+
+
+    .detail-content {
+        font-size: 16px;
+        line-height: 1.9;
+        color: #444;
+        text-align: justify;
+    }
+
+
+
+        .detail-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+        }
+
+
+
+
+
+
+    /* ================= INFO ================= */
+
+
+    .cyber-dl {
+        display: grid;
+        grid-template-columns: 150px 1fr;
+        gap: 15px;
+    }
+
+
+
+        .cyber-dl dt {
+            font-weight: 700;
+            color: #f28c28;
+        }
+
+
+
+        .cyber-dl dd {
+            margin: 0;
+        }
+</style>

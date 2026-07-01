@@ -1,0 +1,29 @@
+
+/*
+ * Ho va ten: Nguyen Thi Man Duy
+ * Mssv: 2123110470
+ * Version 1.0
+ * Ngay thuc hien: 27/6/2026
+ */
+using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace CMS.Data.Entities
+{
+    public class PasswordResetToken
+    {
+        [Key]
+        public int Id { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; } = string.Empty;
+
+        [Required]
+        public string Code { get; set; } = string.Empty; // Mã OTP 6 số
+
+        public DateTime ExpiresAt { get; set; } // Hết hạn sau 15 phút
+
+        public bool IsUsed { get; set; } = false; // Đã sử dụng chưa
+    }
+}

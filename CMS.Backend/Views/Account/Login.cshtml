@@ -1,0 +1,543 @@
+@{
+    Layout = null;
+    ViewData["Title"] = "Đăng nhập";
+}
+
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+
+    <title>Nàng Quýt - Đăng nhập</title>
+
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+
+    <style>
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+
+        body {
+            margin: 0;
+            font-family: 'Inter',sans-serif;
+        }
+
+
+
+
+        .login-page {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient( 135deg, #fff7f2, #ffe4d6 );
+            overflow: hidden;
+            position: relative;
+        }
+
+
+
+
+
+
+            .login-page::before {
+                content: "";
+                position: absolute;
+                width: 500px;
+                height: 500px;
+                background: #ffd1b8;
+                filter: blur(120px);
+                top: -150px;
+                right: -150px;
+            }
+
+
+
+
+
+            .login-page::after {
+                content: "";
+                position: absolute;
+                width: 400px;
+                height: 400px;
+                background: #ffc48a;
+                filter: blur(120px);
+                bottom: -120px;
+                left: -120px;
+            }
+
+
+
+
+
+
+        .login-container {
+            width: 100%;
+            max-width: 430px;
+            padding: 20px;
+            z-index: 2;
+        }
+
+
+
+
+        .login-card {
+            background: white;
+            border-radius: 28px;
+            padding: 45px 38px;
+            box-shadow: 0 25px 70px rgba(0,0,0,.12);
+            position: relative;
+            overflow: hidden;
+        }
+
+
+
+
+            .login-card::before {
+                content: "";
+                height: 6px;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                background: linear-gradient( 90deg, #ff8a3d, #ffb067 );
+            }
+
+
+
+
+
+
+
+        .login-brand {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+
+
+
+
+        .logo {
+            width: 75px;
+            height: 75px;
+            margin: auto;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient( 135deg, #ff8a3d, #ffb86b );
+            color: white;
+            font-family: 'Playfair Display';
+            font-size: 35px;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(255,138,61,.35);
+        }
+
+
+
+
+
+
+        .login-brand h1 {
+            margin: 18px 0 5px;
+            font-family: 'Playfair Display';
+            font-size: 32px;
+            color: #3b2a22;
+        }
+
+
+
+            .login-brand h1 span {
+                color: #f57c22;
+            }
+
+
+
+
+        .login-brand p {
+            color: #8b756b;
+            font-size: 14px;
+        }
+
+
+
+
+
+
+        .input-group {
+            margin-bottom: 22px;
+        }
+
+
+
+            .input-group label {
+                display: block;
+                font-size: 14px;
+                font-weight: 600;
+                color: #5a4034;
+                margin-bottom: 8px;
+            }
+
+
+
+
+        .input-box {
+            position: relative;
+        }
+
+
+
+
+
+            .input-box i {
+                position: absolute;
+                left: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #d18b63;
+            }
+
+
+
+
+
+            .input-box input {
+                width: 100%;
+                padding: 14px 15px 14px 45px;
+                border-radius: 14px;
+                border: 1px solid #ead8ce;
+                outline: none;
+                font-size: 14px;
+                transition: .3s;
+            }
+
+
+
+
+
+                .input-box input:focus {
+                    border-color: #ff9b52;
+                    box-shadow: 0 0 0 4px rgba(255,155,82,.15);
+                }
+
+
+
+
+
+
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 15px;
+            background: linear-gradient( 135deg, #ff8a3d, #ffb067 );
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+
+
+
+
+            .login-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 12px 30px rgba(255,138,61,.35);
+            }
+
+
+
+
+
+
+
+
+        .login-error {
+            background: #fff0ed;
+            color: #d9534f;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+
+
+
+
+
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            text-align: center;
+            color: #999;
+            font-size: 13px;
+        }
+
+
+
+
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+    </style>
+
+
+</head>
+
+
+
+
+
+<body>
+
+
+
+    <div class="login-page">
+
+
+
+        <div class="login-container">
+
+
+            <div class="login-card">
+
+
+
+
+
+
+                <div class="login-brand">
+
+
+                    <div class="logo">
+
+                        NQ
+
+                    </div>
+
+
+                    <h1>
+
+                        Nàng <span>Quýt</span>
+
+                    </h1>
+
+
+                    <p>
+                        Hệ thống quản trị mỹ phẩm & sắc đẹp
+                    </p>
+
+
+
+                </div>
+
+
+
+
+
+
+
+                @if (ViewData["Error"] != null)
+                {
+
+                    <div class="login-error">
+
+                        <i class="fa-solid fa-circle-exclamation"></i>
+
+                        @ViewData["Error"]
+
+                    </div>
+
+                }
+
+
+
+
+
+
+
+                <form method="post"
+                      asp-action="Login"
+                      asp-controller="Account">
+
+
+
+                    @Html.AntiForgeryToken()
+
+
+
+                    <input type="hidden"
+                           name="returnUrl"
+                           value="@ViewData["ReturnUrl"]" />
+
+
+
+
+
+                    <div class="input-group">
+
+
+                        <label>
+                            Tên đăng nhập
+                        </label>
+
+
+                        <div class="input-box">
+
+
+                            <i class="fa-solid fa-user"></i>
+
+
+                            <input type="text"
+                                   name="username"
+                                   placeholder="Nhập tài khoản..." />
+
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+
+
+                    <div class="input-group">
+
+
+                        <label>
+                            Mật khẩu
+                        </label>
+
+
+
+                        <div class="input-box">
+
+
+                            <i class="fa-solid fa-lock"></i>
+
+
+                            <input type="password"
+                                   name="password"
+                                   placeholder="Nhập mật khẩu..." />
+
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+
+
+                    <button class="login-btn">
+
+
+                        <i class="fa-solid fa-right-to-bracket"></i>
+
+                        Đăng nhập
+
+
+                    </button>
+
+
+
+
+
+                </form>
+
+
+
+
+
+
+
+
+                <div class="footer">
+
+
+                    <span class="dot"></span>
+
+                    SYSTEM ONLINE
+
+
+                    <br>
+
+
+                    <small>
+
+                        Nàng Quýt Beauty CMS
+
+                    </small>
+
+
+
+                </div>
+
+
+
+
+
+
+
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+
+
+</body>
+
+
+</html>

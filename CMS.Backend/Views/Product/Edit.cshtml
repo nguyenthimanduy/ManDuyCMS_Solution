@@ -1,0 +1,133 @@
+@model CMS.Data.Entities.Product
+
+@{
+    ViewData["Title"] = "Sửa sản phẩm";
+}
+
+<div class="animate-fade-in">
+    <div class="page-header">
+        <div>
+            <h2>Sửa sản phẩm</h2>
+            <div class="subtitle">Cập nhật thông tin sản phẩm</div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="cyber-form-container">
+
+                <form asp-action="Edit" method="post" enctype="multipart/form-data">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="ImageUrl" />
+
+                    <div class="cyber-form-group">
+                        <label class="cyber-label">Tên sản phẩm</label>
+                        <input asp-for="Name" class="cyber-input" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="cyber-form-group">
+                        <label class="cyber-label">Mô tả</label>
+                        <textarea asp-for="Description" rows="4" class="cyber-input"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="cyber-form-group">
+                                <label class="cyber-label">Giá</label>
+                                <input asp-for="Price" type="number" class="cyber-input" />
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="cyber-form-group">
+                                <label class="cyber-label">Số lượng tồn</label>
+                                <input asp-for="StockQuantity" type="number" class="cyber-input" />
+                                <span asp-validation-for="StockQuantity" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="cyber-form-group">
+
+                        <label class="cyber-label">Ảnh hiện tại</label>
+
+                        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                        {
+                            <img src="@Model.ImageUrl"
+                                 style="width:220px;height:220px;object-fit:cover;border-radius:10px;border:1px solid #ddd;" />
+                        }
+                        else
+                        {
+                            <p>Chưa có ảnh.</p>
+                        }
+
+                    </div>
+
+                    <div class="cyber-form-group">
+
+                        <label class="cyber-label">Chọn ảnh mới</label>
+
+                        <input type="file"
+                               name="uploadImage"
+                               class="form-control"
+                               accept="image/*" />
+
+                    </div>
+
+                    <div class="cyber-form-group">
+
+                        <label class="cyber-label">Danh mục</label>
+
+                        <select asp-for="CategoryProductId"
+                                asp-items="ViewBag.CategoriesProduct"
+                                class="cyber-input">
+
+                            <option value="">-- Chọn danh mục --</option>
+
+                        </select>
+
+                        <span asp-validation-for="CategoryProductId" class="text-danger"></span>
+
+                    </div>
+
+                    <div class="cyber-form-actions">
+
+                        <button type="submit"
+                                class="btn-cyber btn-cyber-filled-primary">
+
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            Lưu thay đổi
+
+                        </button>
+
+                        <a asp-action="Index"
+                           class="btn-cyber btn-cyber-secondary">
+
+                            <i class="fa-solid fa-arrow-left"></i>
+                            Quay lại
+
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

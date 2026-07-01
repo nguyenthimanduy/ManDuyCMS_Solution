@@ -1,0 +1,395 @@
+/* ==========================================
+   HERO - NÀNG QUÝT COSMETICS
+   ========================================== */
+
+.hero-fullscreen {
+    position: relative;
+    width: 100%;
+    height: 92vh;
+    overflow: hidden;
+    background: #fff7f2;
+}
+
+/* Slide */
+.hero-fs-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity .8s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .hero-fs-slide.active {
+        opacity: 1;
+        z-index: 2;
+    }
+
+/* Overlay */
+.hero-fs-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient( 90deg, rgba(255,247,242,.96) 0%, rgba(255,247,242,.85) 40%, rgba(255,247,242,.35) 70%, rgba(255,247,242,.05) 100% );
+}
+
+/* Main layout */
+.hero-container {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    max-width: 1300px;
+    margin: auto;
+    padding: 0 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 70px;
+}
+
+.hero-left {
+    flex: 1;
+}
+
+.hero-right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Product image */
+.hero-product-image {
+    width: 100%;
+    max-width: 520px;
+    object-fit: contain;
+    filter: drop-shadow(0 28px 45px rgba(0,0,0,.18));
+    animation: floatImage 5s ease-in-out infinite;
+    transition: .4s;
+}
+
+    .hero-product-image:hover {
+        transform: scale(1.03);
+    }
+
+@keyframes floatImage {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-14px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* Badge */
+.hero-fs-badge {
+    display: inline-block;
+    padding: 10px 22px;
+    background: #fff;
+    border: 1px solid #ffd2af;
+    border-radius: 999px;
+    color: #c96b1b;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: .02em;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px rgba(255,140,66,.10);
+}
+
+/* Title */
+.hero-fs-title {
+    font-size: clamp(2.5rem,5vw,4.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    color: #3d2c1f;
+    margin: 0 0 20px;
+}
+
+/* Description */
+.hero-fs-desc {
+    font-size: 17px;
+    line-height: 1.8;
+    color: #666;
+    margin-bottom: 28px;
+}
+
+/* Price */
+.hero-price {
+    font-size: 34px;
+    font-weight: 800;
+    color: #ff8c42;
+    margin-bottom: 34px;
+}
+
+/* Actions */
+.hero-fs-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+/* Primary button */
+.hero-fs-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 34px;
+    border-radius: 999px;
+    background: #ff8c42;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    box-shadow: 0 12px 30px rgba(255,140,66,.30);
+    transition: all .25s ease;
+}
+
+    .hero-fs-btn-primary:hover {
+        background: #ff7420;
+        transform: translateY(-3px);
+    }
+
+/* Outline button */
+.hero-fs-btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 34px;
+    border-radius: 999px;
+    background: #fff;
+    border: 2px solid #ff8c42;
+    color: #ff8c42;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all .25s ease;
+}
+
+    .hero-fs-btn-outline:hover {
+        background: #ff8c42;
+        color: #fff;
+    }
+
+/* Arrows */
+.hero-fs-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 54px;
+    height: 54px;
+    border: none;
+    border-radius: 50%;
+    background: #fff;
+    color: #ff8c42;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 20;
+    font-size: 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.10);
+    transition: all .25s ease;
+}
+
+    .hero-fs-arrow:hover {
+        background: #ff8c42;
+        color: #fff;
+    }
+
+.hero-fs-arrow-left {
+    left: 24px;
+}
+
+.hero-fs-arrow-right {
+    right: 24px;
+}
+
+/* Dots */
+.hero-fs-dots {
+    position: absolute;
+    left: 50%;
+    bottom: 34px;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 30;
+}
+
+.hero-fs-dot {
+    width: 12px;
+    height: 12px;
+    border: none;
+    border-radius: 999px;
+    background: #ffd5ba;
+    cursor: pointer;
+    transition: all .25s ease;
+}
+
+    .hero-fs-dot.active {
+        width: 36px;
+        background: #ff8c42;
+    }
+
+/* Progress */
+.hero-fs-progress {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 4px;
+    background: #ffe7d7;
+}
+
+.hero-fs-progress-bar {
+    height: 100%;
+    background: #ff8c42;
+    animation: heroProgress 5s linear forwards;
+}
+
+@keyframes heroProgress {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+/* Loading */
+.hero-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 92vh;
+}
+
+.hero-spinner {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 5px solid #ffe3d1;
+    border-top-color: #ff8c42;
+    animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* =========================
+   TABLET
+   ========================= */
+@media (max-width: 992px) {
+
+    .hero-fullscreen {
+        height: auto;
+        min-height: 100vh;
+        padding: 40px 0;
+    }
+
+    .hero-container {
+        flex-direction: column-reverse;
+        justify-content: center;
+        text-align: center;
+        padding: 0 24px;
+        gap: 34px;
+    }
+
+    .hero-left,
+    .hero-right {
+        width: 100%;
+    }
+
+    .hero-product-image {
+        max-width: 360px;
+    }
+
+    .hero-fs-actions {
+        justify-content: center;
+    }
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+@media (max-width: 768px) {
+
+    .hero-fullscreen {
+        min-height: 92vh;
+    }
+
+    .hero-container {
+        padding: 0 18px;
+    }
+
+    .hero-product-image {
+        max-width: 280px;
+    }
+
+    .hero-fs-title {
+        font-size: 2.2rem;
+    }
+
+    .hero-fs-desc {
+        font-size: 15px;
+    }
+
+    .hero-price {
+        font-size: 28px;
+    }
+
+    .hero-fs-actions {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .hero-fs-btn-primary,
+    .hero-fs-btn-outline {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .hero-fs-arrow {
+        width: 42px;
+        height: 42px;
+        font-size: 18px;
+    }
+
+    .hero-fs-arrow-left {
+        left: 10px;
+    }
+
+    .hero-fs-arrow-right {
+        right: 10px;
+    }
+
+    .hero-fs-dots {
+        bottom: 20px;
+    }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+
+    .hero-fs-title {
+        font-size: 1.9rem;
+    }
+
+    .hero-fs-badge {
+        font-size: 13px;
+        padding: 8px 16px;
+    }
+
+    .hero-price {
+        font-size: 26px;
+    }
+}

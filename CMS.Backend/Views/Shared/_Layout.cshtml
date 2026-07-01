@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        @ViewData["Title"] - Nàng Quýt
+    </title>
+
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+
+    <style>
+
+
+        body {
+            margin: 0;
+            background: #fff8f0;
+            font-family: "Segoe UI",sans-serif;
+            color: #333;
+        }
+
+
+
+        /* ================= LAYOUT ================= */
+
+
+        .cyber-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+
+
+
+        /* ================= SIDEBAR ================= */
+
+
+        .cyber-sidebar {
+            width: 260px;
+            background: white;
+            border-right: 1px solid #ffd9ad;
+            box-shadow: 5px 0 20px rgba(242,140,40,.12);
+            display: flex;
+            flex-direction: column;
+        }
+
+
+
+        .sidebar-brand {
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #f28c28;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 15px;
+        }
+
+
+
+        .nav-section-title {
+            color: #aaa;
+            font-size: 12px;
+            margin: 18px 10px 8px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 16px;
+            margin-bottom: 8px;
+            border-radius: 14px;
+            color: #555;
+            text-decoration: none;
+            transition: all .3s ease;
+            position: relative;
+            font-weight: 500;
+        }
+
+            .nav-item i {
+                width: 22px;
+                text-align: center;
+                color: #f28c28;
+                transition: .3s;
+            }
+
+            .nav-item:hover {
+                background: linear-gradient(90deg,#fff8ef,#fff3dc,#ffffff);
+                color: #f28c28;
+                transform: translateX(6px);
+            }
+
+                .nav-item:hover i {
+                    color: #ff8c00;
+                }
+
+            /* Menu đang được chọn */
+
+            .nav-item.active,
+            .nav-item.active:hover {
+                background: linear-gradient( 135deg, #ff9f43 0%, #ffc75f 55%, #fff6ea 100% );
+                color: #9a4d00;
+                font-weight: 700;
+                border-left: 5px solid #ff7f00;
+                box-shadow: 0 8px 22px rgba(255,170,70,.35);
+                transform: none;
+            }
+
+                .nav-item.active i {
+                    color: #ffffff;
+                }
+
+                .nav-item.active::after {
+                    content: "";
+                    position: absolute;
+                    right: 15px;
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
+                    background: #ff8a00;
+                    box-shadow: 0 0 12px #ff8a00;
+                }
+        .sidebar-footer {
+            padding: 20px;
+            text-align: center;
+            color: #f28c28;
+            border-top: 1px solid #ffe1bd;
+        }
+
+
+
+
+
+        /* ================= MAIN ================= */
+
+
+        .cyber-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+
+
+
+        .cyber-topbar {
+            height: 75px;
+            background: white;
+            border-bottom: 1px solid #ffd9ad;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+        }
+
+
+
+
+        .sidebar-toggle {
+            border: none;
+            background: #fff0df;
+            color: #f28c28;
+            padding: 10px 14px;
+            border-radius: 12px;
+        }
+
+
+
+
+        .topbar-user {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+
+
+
+        .user-name {
+            font-weight: 700;
+        }
+
+
+
+        .user-role {
+            color: #f28c28;
+            font-size: 13px;
+        }
+
+
+
+
+        .topbar-logout {
+            border: none;
+            background: #fff0df;
+            color: #f28c28;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+
+
+
+
+
+
+        /* ================= CONTENT ================= */
+
+
+        .cyber-content {
+            flex: 1;
+            padding: 30px;
+        }
+
+
+
+
+        /* ================= VIEW COMMON ================= */
+
+
+        .animate-fade-in {
+            animation: fade .3s ease;
+        }
+
+        @@keyframes fade {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+
+
+            .page-header h2 {
+                color: #f28c28;
+                font-weight: 700;
+            }
+
+
+
+        .subtitle {
+            color: #888;
+        }
+
+
+
+
+
+
+        .cyber-table-wrapper {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,.06);
+        }
+
+
+
+
+
+        .cyber-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+
+
+
+            .cyber-table th {
+                background: #fff0df;
+                color: #f28c28;
+                padding: 15px;
+            }
+
+
+
+
+            .cyber-table td {
+                padding: 15px;
+                border-bottom: 1px solid #eee;
+            }
+
+
+
+
+            .cyber-table tr:hover {
+                background: #fff8f0;
+            }
+
+
+
+
+
+
+
+        /* BUTTON */
+
+
+        .btn-cyber {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 15px;
+            border-radius: 12px;
+            text-decoration: none;
+            border: none;
+        }
+
+
+
+
+        .btn-cyber-success {
+            background: #28c76f;
+            color: white;
+        }
+
+
+
+
+        .btn-cyber-primary {
+            background: #f28c28;
+            color: white;
+        }
+
+
+
+
+        .btn-cyber-danger {
+            background: #ea5455;
+            color: white;
+        }
+
+
+
+
+        .btn-cyber-sm {
+            font-size: 13px;
+        }
+
+
+
+
+
+
+
+        /* FOOTER */
+
+
+        .cyber-footer {
+            background: white;
+            padding: 15px;
+            text-align: center;
+            color: #888;
+            border-top: 1px solid #ffd9ad;
+        }
+
+
+
+
+
+
+        /* MOBILE */
+
+
+        @@media(max-width:768px) {
+
+
+            .cyber-sidebar {
+                position: fixed;
+                left: -260px;
+                top: 0;
+                height: 100vh;
+                z-index: 999;
+                transition: .3s;
+            }
+
+
+
+                .cyber-sidebar.active {
+                    left: 0;
+                }
+
+
+
+            .cyber-content {
+                padding: 15px;
+            }
+
+
+
+            .topbar-breadcrumb {
+                display: none;
+            }
+
+
+
+            .user-name,
+            .user-role {
+                display: none;
+            }
+        }
+
+        /* ================= FILTER ================= */
+
+        .cyber-filter {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,.06);
+            display: flex;
+            gap: 20px;
+            align-items: flex-end;
+            margin-bottom: 25px;
+        }
+
+
+        .filter-group {
+            flex: 1;
+        }
+
+
+            .filter-group label {
+                display: block;
+                margin-bottom: 8px;
+                color: #f28c28;
+                font-weight: 600;
+            }
+
+
+
+        .cyber-input {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            border: 1px solid #ffd9ad;
+            outline: none;
+            background: #fffaf5;
+        }
+
+
+
+            .cyber-input:focus {
+                border-color: #f28c28;
+                box-shadow: 0 0 0 3px rgba(242,140,40,.15);
+            }
+
+
+
+        /* ================= BADGE ================= */
+
+
+        .badge-cyber {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: white;
+        }
+
+
+        .badge-cyber-purple {
+            background: #9b59b6;
+        }
+
+
+
+
+        /* ================= BUTTON INFO ================= */
+
+
+        .btn-cyber-info {
+            background: #3498db;
+            color: white;
+        }
+
+
+
+
+
+        /* ================= IMAGE ================= */
+
+
+        .product-thumb {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+
+
+        .post-no-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: #fff0df;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f28c28;
+        }
+
+
+
+        /* mobile */
+        @@media(max-width:768px) {
+
+            .cyber-filter {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+
+
+</head>
+
+
+
+<body>
+
+
+    <div class="cyber-layout">
+
+
+
+        <aside class="cyber-sidebar">
+
+
+            <a class="sidebar-brand"
+               asp-controller="Home"
+               asp-action="Index">
+
+                Nàng Quýt
+
+            </a>
+
+
+
+            <nav class="sidebar-nav">
+
+
+
+                <div class="nav-section-title">
+                    Tổng quan
+                </div>
+
+
+                <a class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" ? "active" : "")"
+                   asp-controller="Home"
+                   asp-action="Index">
+
+                    <i class="fa-solid fa-house"></i>
+
+                    Dashboard
+
+                </a>
+
+                <div class="nav-section-title">
+                    Nội dung
+                </div>
+
+
+                <a class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Category" ? "active" : "")"
+                   asp-controller="Category"
+                   asp-action="Index">
+
+                    <i class="fa-solid fa-folder"></i>
+
+                    Danh mục bài viết
+
+                </a>
+
+
+                <a class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Post" ? "active" : "")"
+                   asp-controller="Post"
+                   asp-action="Index">
+
+                    <i class="fa-solid fa-newspaper"></i>
+
+                    Bài viết
+
+                </a>
+
+                <div class="nav-section-title">
+                    Sản phẩm
+                </div>
+
+
+
+                <a class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "CategoriesProduct" ? "active" : "")"
+                   asp-controller="CategoriesProduct"
+                   asp-action="Index">
+
+                    <i class="fa-solid fa-tags"></i>
+
+                    Danh mục sản phẩm
+
+                </a>
+
+
+                <a class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Product" ? "active" : "")"
+                   asp-controller="Product"
+                   asp-action="Index">
+
+                    <i class="fa-solid fa-box"></i>
+
+                    Sản phẩm
+
+                </a>
+
+                <div class="nav-section-title">
+                    Kinh doanh
+                </div>
+
+                <a class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Customer" ? "active" : "")"
+                   asp-controller="Customer"
+                   asp-action="Index">
+
+                    <i class="fa-solid fa-users"></i>
+
+                    Khách hàng
+
+                </a>
+
+
+                <a class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Order" ? "active" : "")"
+                   asp-controller="Order"
+                   asp-action="Index">
+
+                    <i class="fa-solid fa-cart-shopping"></i>
+
+                    Đơn hàng
+
+                </a>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "User" ? "active" : "")"
+                       asp-controller="User"
+                       asp-action="Index">
+
+                        <i class="fa-solid fa-user-gear"></i>
+
+                        Thành viên
+
+                    </a>
+                }
+
+            </nav>
+
+
+
+            <div class="sidebar-footer">
+
+                <i class="fa-solid fa-circle"></i>
+
+                SYSTEM ONLINE
+
+            </div>
+
+
+        </aside>
+
+
+
+
+
+        <div class="cyber-main">
+
+
+
+            <header class="cyber-topbar">
+
+
+                <div>
+
+
+                    <button class="sidebar-toggle">
+
+                        <i class="fa-solid fa-bars"></i>
+
+                    </button>
+
+
+                    <span class="topbar-breadcrumb">
+
+                        Trang /
+
+                        <b style="color:#f28c28">
+
+                            @ViewData["Title"]
+
+                        </b>
+
+                    </span>
+
+
+                </div>
+
+
+
+
+
+                <div class="topbar-user">
+
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+
+
+                        <div>
+
+                            <div class="user-name">
+
+                                @(User.FindFirst("FullName")?.Value ?? "Người dùng")
+
+                            </div>
+
+
+                            <div class="user-role">
+
+                                @User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value
+
+                            </div>
+
+
+                        </div>
+
+
+                        <form asp-controller="Account"
+                              asp-action="Logout"
+                              method="post">
+
+
+                            <button class="topbar-logout">
+
+                                <i class="fa-solid fa-right-from-bracket"></i>
+
+                            </button>
+
+
+                        </form>
+
+
+                    }
+
+
+                </div>
+
+
+
+            </header>
+
+
+
+
+
+            <main class="cyber-content">
+
+                @RenderBody()
+
+            </main>
+
+
+
+
+
+            <footer class="cyber-footer">
+
+                © 2026 Nguyễn Thị Mẫn Duy
+
+            </footer>
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+
+
+</body>
+
+
+</html>

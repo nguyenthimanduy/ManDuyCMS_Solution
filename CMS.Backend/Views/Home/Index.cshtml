@@ -1,0 +1,500 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+
+
+<div class="container-fluid mt-4">
+
+
+    <h2 class="mb-4 fw-bold">
+
+
+        <i class="bi bi-speedometer2"></i>
+
+        Bảng điều khiển
+
+
+    </h2>
+
+
+
+
+
+    <div class="row g-4">
+
+
+
+
+
+        <div class="col-lg-3">
+
+            <div class="card bg-primary text-white p-3 shadow">
+
+
+                <h6>
+
+                    Tổng sản phẩm
+
+                </h6>
+
+
+                <h2>
+
+                    @(ViewBag.TotalProduct ?? 0)
+
+                </h2>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+        <div class="col-lg-3">
+
+
+            <div class="card bg-success text-white p-3 shadow">
+
+
+                <h6>
+
+                    Tổng đơn hàng
+
+                </h6>
+
+
+                <h2>
+
+                    @(ViewBag.TotalOrder ?? 0)
+
+                </h2>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+        <div class="col-lg-3">
+
+
+            <div class="card bg-warning p-3 shadow">
+
+
+                <h6>
+
+                    Tổng khách hàng
+
+                </h6>
+
+
+                <h2>
+
+                    @(ViewBag.TotalCustomer ?? 0)
+
+                </h2>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+
+
+        <div class="col-lg-3">
+
+
+            <div class="card bg-danger text-white p-3 shadow">
+
+
+                <h6>
+
+                    Tổng bài viết
+
+                </h6>
+
+
+                <h2>
+
+                    @(ViewBag.TotalPost ?? 0)
+
+                </h2>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- ĐƠN HÀNG -->
+
+
+    <div class="card mt-5 shadow">
+
+
+        <div class="card-header fw-bold">
+
+
+            <i class="fa-solid fa-cart-shopping"></i>
+
+            5 đơn hàng mới nhất
+
+
+        </div>
+
+
+
+
+
+        <div class="card-body">
+
+
+
+            <table class="table table-hover">
+
+
+                <thead>
+
+                    <tr>
+
+
+                        <th>
+                            Mã
+                        </th>
+
+
+                        <th>
+                            Khách hàng
+                        </th>
+
+
+                        <th>
+                            Ngày đặt
+                        </th>
+
+
+                    </tr>
+
+
+                </thead>
+
+
+
+
+
+                <tbody>
+
+
+
+                    @if (ViewBag.LatestOrders != null)
+                    {
+
+
+                        foreach (var item in ViewBag.LatestOrders)
+                        {
+
+
+                            <tr>
+
+
+                                <td>
+
+                                    #@item.Id
+
+                                </td>
+
+
+
+                                <td>
+
+                                    @(item.Customer?.FullName ?? "Khách lẻ")
+
+                                </td>
+
+
+
+                                <td>
+
+                                    @item.OrderDate.ToString("dd/MM/yyyy")
+
+                                </td>
+
+
+
+                            </tr>
+
+
+                        }
+
+
+                    }
+                    else
+                    {
+
+                        <tr>
+
+                            <td colspan="3"
+                                class="text-center">
+
+
+                                Không có đơn hàng
+
+
+                            </td>
+
+                        </tr>
+
+
+                    }
+
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- BÀI VIẾT -->
+
+
+
+    <div class="card mt-5 shadow">
+
+
+        <div class="card-header fw-bold">
+
+
+            <i class="fa-solid fa-newspaper"></i>
+
+
+            3 bài viết mới nhất
+
+
+        </div>
+
+
+
+
+
+        <div class="card-body">
+
+
+            <table class="table table-hover">
+
+
+
+                <thead>
+
+
+                    <tr>
+
+
+                        <th>
+                            Tiêu đề
+                        </th>
+
+
+                        <th>
+                            Danh mục
+                        </th>
+
+
+                        <th>
+                            Ngày đăng
+                        </th>
+
+
+                        <th>
+                            Thao tác
+                        </th>
+
+
+                    </tr>
+
+
+                </thead>
+
+
+
+
+
+                <tbody>
+
+
+
+
+                    @if (ViewBag.LatestPosts != null)
+                    {
+
+
+                        foreach (var item in ViewBag.LatestPosts)
+                        {
+
+
+                            <tr>
+
+
+                                <td>
+
+
+                                    <b>
+
+                                        @item.Title
+
+                                    </b>
+
+
+                                </td>
+
+
+
+
+
+                                <td>
+
+
+                                    <span class="badge bg-info text-dark">
+
+
+                                        @(item.Category?.Name ?? "Không có")
+
+
+                                    </span>
+
+
+                                </td>
+
+
+
+
+
+                                <td>
+
+
+                                    @item.CreatedDate.ToString("dd/MM/yyyy")
+
+
+                                </td>
+
+
+
+
+
+                                <td>
+
+
+                                    <a asp-controller="Post"
+                                       asp-action="Details"
+                                       asp-route-id="@item.Id"
+                                       class="btn btn-primary btn-sm">
+
+
+                                        <i class="fa-solid fa-eye"></i>
+
+                                        Xem chi tiết
+
+
+                                    </a>
+
+
+                                </td>
+
+
+
+                            </tr>
+
+
+                        }
+
+
+                    }
+                    else
+                    {
+
+
+                        <tr>
+
+                            <td colspan="4"
+                                class="text-center">
+
+
+                                Không có bài viết
+
+
+                            </td>
+
+
+                        </tr>
+
+
+                    }
+
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+</div>
